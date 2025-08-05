@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lebenslauf</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Biografie von  - Künstlerin aus Chile.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"> <!-- Schrift für h2 -->
+
+    <style>
+
+
+
+
+
+
+
+        body {
+            margin: 0;
+            background-color: #2A2E35;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+        }
+
+
+/* Menü Button */
+.menu-button {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.menu-button .bar {
+    background-color: white;
+    height: 3px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 35%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 60px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(100%);
+    pointer-events: none;
+    transition:
+        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+
+
+/* Menü-Liste */
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+   
+}
+
+.menu-list li {
+    padding: 18px;  /* Leicht vergrößerter Abstand */
+}
+
+.menu-list a {
+    font-size: 18px;  /* Etwas kleinere Schrift */
+    color: white;
+    text-decoration: none;
+    display: inline;
+    cursor: pointer;        /* Pointer nur über dem Text */
+    transition: color 0.3s;
+}
+
+.menu-list a:hover {
+    color: #e6e6e6; /* Goldene Farbe beim Hover */
+}
+
+
+
+nav {
+    padding: 12px 20px;  /* Kleinere Abstände */
+    font-size: 16px; /* Kleinere Schrift */
+}
+
+
+
+footer {
+    padding: 12px 20px; /* Kleinere Abstände */
+    font-size: 14px; /* Kleinere Schrift */
+}
+
+footer .flex a {
+    font-size: 14px; /* Schriftgröße für Links im Footer */
+    color: white;
+}
+
+footer .flex a:hover {
+    color: #e6e6e6; /* Hover-Effekt */
+}
+
+
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+
+        .nav-button {
+    position: fixed; /* <- Ändere hier */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100; /* über allem */
+}
+/* Anpassung der Größe des Buttons "Verónica Höft" */
+nav a {
+            font-size: 1.2rem !important; /* Neue Schriftgröße für den Button */
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <canvas id="galaxyCanvas"></canvas>
+
+ 
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+        <a href="index.html" class="font-bold">Verónica Höft</a>
+    
+        <!-- Menü Button für Mobile -->
+        <button id="menu-button" class="menu-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </nav>
+
+
+   <!-- Menü Overlay (Erscheint beim Klick) -->
+<div id="menu-overlay" class="menu-overlay">
+<ul class="menu-list">
+    <li><a href="Galerie111.html">Galerie</a></li>
+    <li><a href="Bio.html">Biografie</a></li>
+</ul>
+</div>
+
+
+    <div class="relative flex justify-start items-center h-screen p-8 mt-0" style="margin-top: 280px;">
+        <div class="max-w-2xl mx-auto text-center">
+            <h1 class="text-3xl font-semibold text-white">Biografie von Verónica Höft</h1>
+
+            <p class="mt-3 text-base text-white leading-relaxed">
+                <strong>1967</strong> in Chile geboren<br>
+                <strong>Ausbildung:</strong><br>
+                1991: Abschluss des Studiums Kunst für Lehramt an der Universität Concepción, Chile, mit Auszeichnung als beste Absolventin des Jahrgangs.<br><br>
+
+                <strong>Aktivitäten:</strong><br>
+                1990-1991: Assistentin der Fächer Malerei II, Zeichnung II und Produktgestaltung an der Fakultät für Kunst an der Universität Concepción.<br>
+                1991-1992: Kunstprojekt für Kinder „Talleres poblacionales de plástica infantil“ der Kulturabteilung des regionalen Regierungsbezirks, Concepción, Chile.<br>
+                1992-1993: Kunstlehrerin am Gymnasium „Kingston College“, Concepción, Chile.<br>
+                1994: Übersiedlung nach Deutschland, Rheinland-Pfalz.<br>
+                1995: Heirat mit Michael Höft.<br>
+                1995-1996: Deutsch als Fremdsprache an der Johannes Gutenberg-Universität in Mainz für den Hochschulzugang ausländischer Studienbewerber.<br><br>
+
+                <strong>Gruppenausstellungen:</strong><br>
+                1990: „Fec 90“ im chilenische-britischen Institut Concepción, Chile.<br>
+                1991: Wandmalerei “El arte vive en talcahuano“, unter der Leitung des Künstlers Julio Escámez, Talcahuano, Chile.<br>
+                1992: „Diálogo I“ Chilenisch-Französische Institut, Concepción, Chile.<br>
+                1993: „La corneta de fin de siglo” Kunstgalerie der Universität Concepción, Concepción, Chile.<br><br>
+
+                <strong>Weitere Ausstellungen und Aktivitäten:</strong><br>
+                Zahlreiche Atelier-Ausstellungen (ca. zwei jährlich) seit 2006.<br>
+                Seit 2019 Ehrenamtliche Arbeit als Beisitzer in der Künstlerbahnhof Ebernburg e.V., Verein zur Förderung von Kunst und Kultur.<br>
+            </p>
+
+            <br>
+            <br>
+
+           
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+   
+
+    
+
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-3 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="mb-2 md:mb-0">© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-6">
+                <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+                <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+                <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+  
+        
+document.getElementById("menu-button").addEventListener("click", function() {
+    var menuOverlay = document.getElementById("menu-overlay");
+    menuOverlay.classList.toggle("active");
+});
+
+
+    </script>
+</body>
+</html>

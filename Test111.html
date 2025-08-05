@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verónica Paola Höft 101 - Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Kunst aus Bad Kreuznach.">
+    <link href="https://fonts.googleapis.com/css2?family=Qwigley&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"> <!-- Schrift für h2 -->
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #2A2E35;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Menü Button */
+        .menu-button {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .menu-button .bar {
+            background-color: white;
+            height: 3px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 35%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 60px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            pointer-events: none;
+            transition:
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        /* Menü-Liste */
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .menu-list li {
+            padding: 18px;  /* Leicht vergrößerter Abstand */
+        }
+
+        .menu-list a {
+            font-size: 18px;  /* Etwas kleinere Schrift */
+            color: white;
+            text-decoration: none;
+            display: inline;
+            cursor: pointer;        /* Pointer nur über dem Text */
+            transition: color 0.3s;
+        }
+
+        .menu-list a:hover {
+            color: #e6e6e6; /* Goldene Farbe beim Hover */
+        }
+
+        nav {
+            padding: 12px 20px;  /* Kleinere Abstände */
+            font-size: 16px; /* Kleinere Schrift */
+        }
+
+        footer {
+            padding: 12px 20px; /* Kleinere Abstände */
+            font-size: 14px; /* Kleinere Schrift */
+        }
+
+        footer .flex a {
+            font-size: 14px; /* Schriftgröße für Links im Footer */
+            color: white;
+        }
+
+        footer .flex a:hover {
+            color: #e6e6e6; /* Hover-Effekt */
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .background-div {
+            width: 100%;
+            height: 700px; /* Setze eine feste Höhe für das div */
+            background-image: url('Mainfirstpage.jpg'); /* Dein Bild */
+            background-size: cover; /* Bild wird so skaliert, dass es den div vollständig abdeckt */
+            background-position: center; /* Das Bild wird zentriert */
+            background-attachment: fixed; /* Das Bild bleibt beim Scrollen fixiert */
+            color: white; /* Damit der Text lesbar ist */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .heading {
+            margin-top: 30vh;
+            text-align: center;
+            font-family: 'Qwigley', cursive, sans-serif;
+            font-size: 7rem;
+            font-weight: normal;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            opacity: 0; /* Unsichtbar */
+            transition: opacity 1.1s ease-in-out; /* Übergang für das Einblenden */
+            transition-delay: 0.3s; /* Verzögerung von 2 Sekunden */
+        }
+
+        .subheading {
+            font-family: 'Roboto Slab', serif; /* Schriftart für h2 */
+            font-size: 2.5rem; /* Größe für das h2 */
+            font-weight: normal;
+            margin-top: 47vh;
+            opacity: 0; /* Unsichtbar */
+            transition: opacity 1.1s ease-in-out;
+            transition-delay: 0.7s; /* Verzögerung */
+        }
+
+        /* Anpassung der Größe des Buttons "Verónica Höft" */
+        nav a {
+            font-size: 2rem !important; /* Neue Schriftgröße für den Button */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="background-div">
+        <h1 class="heading">Verónica Höft</h1>
+        <h2 class="subheading">Kunst aus Bad Kreuznach</h2>
+    </div>
+
+    <canvas id="galaxyCanvas"></canvas>
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+        <a href="index.html" class="font-bold">Verónica Höft</a>
+    
+        <!-- Menü Button für Mobile -->
+        <button id="menu-button" class="menu-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </nav>
+
+    <!-- Menü Overlay (Erscheint beim Klick) -->
+    <div id="menu-overlay" class="menu-overlay">
+        <ul class="menu-list">
+            <li><a href="Galerie111.html">Galerie</a></li>
+            <li><a href="Bio.html">Biografie</a></li>
+        </ul>
+    </div>
+
+    <script>
+        window.onload = function() {
+            if (document.fonts) {
+                document.fonts.load('1em Qwigley').then(function () {
+                    document.querySelector('.heading').style.opacity = 1;
+                });
+                document.fonts.load('1em Roboto Slab').then(function () {
+                    document.querySelector('.subheading').style.opacity = 1;
+                });
+            }
+        };
+
+        document.getElementById("menu-button").addEventListener("click", function() {
+            var menuOverlay = document.getElementById("menu-overlay");
+            menuOverlay.classList.toggle("active");
+        });
+
+        const canvas = document.getElementById("galaxyCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawBackground();
+            drawStars();
+        }
+
+        function drawBackground() {
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0, 
+                canvas.width / 2, canvas.height / 2, canvas.width * 0.6
+            );
+
+            gradient.addColorStop(0, "rgba(227, 242, 253, 0)");
+            gradient.addColorStop(0.000001, "rgba(210, 235, 255, 0.1)");
+            gradient.addColorStop(0.000005, "rgba(220, 240, 240, 0.4)");
+            gradient.addColorStop(1, "#EEEEEE");
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        window.onscroll = function () {
+            if (window.scrollY > 1745) {
+                document.getElementById('bounceArrow').style.display = 'none';
+                document.getElementById('scroll-container').style.display = 'none';
+            }
+        };
+
+        const arrow = document.getElementById('bounceArrow');
+
+        function triggerBounce() {
+            arrow.classList.add('bounce');
+
+            // Nach 200ms zurückspringen (wie ein echter Tick)
+            setTimeout(() => {
+                arrow.classList.remove('bounce');
+            }, 200);
+        }
+
+        // Alle 6 Sekunden einmal triggern
+        setInterval(triggerBounce, 5000);
+    </script>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-3 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="mb-2 md:mb-0">© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-6">
+                <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+                <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+                <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

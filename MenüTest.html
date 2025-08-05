@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verónica Paola Höft 101 - Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Kunst aus Bad Kreuznach.">
+    <link href="https://fonts.googleapis.com/css2?family=Qwigley&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #2A2E35;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .menu-button .bar {
+            background-color: white;
+            height: 3px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 35%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 60px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            pointer-events: none;
+            transition:
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .menu-list li {
+            padding: 14px;
+        }
+
+        .menu-list a {
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .menu-list a:hover {
+            color: #e6e6e6;
+        }
+
+        nav {
+            padding: 10px 16px;
+            font-size: 16px;
+        }
+
+        footer {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        footer .flex a {
+            font-size: 14px;
+            color: white;
+        }
+
+        footer .flex a:hover {
+            color: #e6e6e6;
+        }
+
+        .background-div {
+            width: 100%;
+            min-height: 80vh;
+            background-image: url('Mainfirstpage.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .heading {
+        font-family: 'Qwigley', cursive, sans-serif;
+        font-weight: normal;
+        line-height: 1.1;
+        letter-spacing: 2px;
+        opacity: 0;
+        transition: opacity 1.1s ease-in-out;
+        transition-delay: 0.3s;
+    }
+
+    .subheading {
+        font-family: 'Roboto Slab', serif;
+        font-weight: normal;
+        opacity: 0;
+        transition: opacity 1.1s ease-in-out;
+        transition-delay: 0.7s;
+    }
+
+    .content-padding {
+        padding-bottom: 4rem;
+    }
+</style>
+</head>
+<body>
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+        <a href="index.html" class="text-xl font-bold">Verónica Höft</a>
+        <button id="menu-button" class="menu-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </nav>
+
+    <div id="menu-overlay" class="menu-overlay">
+        <ul class="menu-list">
+            <li><a href="Galerie111.html">Galerie</a></li>
+            <li><a href="UnterseiteBio.html">Biografie</a></li>
+        </ul>
+    </div>
+
+    <div class="relative flex justify-center items-start min-h-screen px-4 sm:px-6 md:px-8 pt-48 text-center">
+        <div class="max-w-3xl mx-auto content-padding">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-semibold text-white mb-4">Biografie von Verónica Höft</h1>
+            <p class="text-sm sm:text-base md:text-lg text-white leading-relaxed text-left text-center">
+                <br>
+                <strong>1967</strong> in Chile geboren<br>
+                <strong>Ausbildung:</strong><br>
+                1991: Abschluss des Studiums Kunst für Lehramt an der Universität Concepción, Chile, mit Auszeichnung als beste Absolventin des Jahrgangs.<br><br>
+    
+                <strong>Aktivitäten:</strong><br>
+                1990-1991: Assistentin der Fächer Malerei II, Zeichnung II und Produktgestaltung an der Fakultät für Kunst an der Universität Concepción.<br>
+                1991-1992: Kunstprojekt für Kinder „Talleres poblacionales de plástica infantil“ der Kulturabteilung des regionalen Regierungsbezirks, Concepción, Chile.<br>
+                1992-1993: Kunstlehrerin am Gymnasium „Kingston College“, Concepción, Chile.<br>
+                1994: Übersiedlung nach Deutschland, Rheinland-Pfalz.<br>
+                1995: Heirat mit Michael Höft.<br>
+                1995-1996: Deutsch als Fremdsprache an der Johannes Gutenberg-Universität in Mainz für den Hochschulzugang ausländischer Studienbewerber.<br><br>
+    
+                <strong>Gruppenausstellungen:</strong><br>
+                1990: „Fec 90“ im chilenische-britischen Institut Concepción, Chile.<br>
+                1991: Wandmalerei “El arte vive en talcahuano“, unter der Leitung des Künstlers Julio Escámez, Talcahuano, Chile.<br>
+                1992: „Diálogo I“ Chilenisch-Französische Institut, Concepción, Chile.<br>
+                1993: „La corneta de fin de siglo” Kunstgalerie der Universität Concepción, Concepción, Chile.<br><br>
+    
+                <strong>Weitere Ausstellungen und Aktivitäten:</strong><br>
+                Zahlreiche Atelier-Ausstellungen (ca. zwei jährlich) seit 2006.<br>
+                Seit 2019 Ehrenamtliche Arbeit als Beisitzer in der Künstlerbahnhof Ebernburg e.V., Verein zur Förderung von Kunst und Kultur.<br>
+            </p>
+        </div>
+    </div>
+    
+
+    <footer class="w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-3 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-2">
+            <p>© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-4">
+                <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+                <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+                <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            if (document.fonts) {
+                document.fonts.load('1em Qwigley').then(function () {
+                    document.querySelector('.heading')?.style.opacity = 1;
+                });
+                document.fonts.load('1em Roboto Slab').then(function () {
+                    document.querySelector('.subheading')?.style.opacity = 1;
+                });
+            }
+        };
+
+        document.getElementById("menu-button").addEventListener("click", function () {
+            document.getElementById("menu-overlay").classList.toggle("active");
+        });
+    </script>
+</body>
+</html>

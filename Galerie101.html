@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basteln – Verónica Paola Höft 101</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background-color: #7f7f7f;
+    }
+
+    .center-button {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: transparent;
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+
+    .gallery-images {
+      display: none;
+    }
+
+    .nav-button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+    }
+
+    .prev { left: 50px; }
+    .next { right: 50px; }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .button {
+      padding: 12px 25px;
+      background-color: #4A4A4A;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3A3A3A;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">Verónica Paola Höft 101</a>
+    <button id="menu-button" class="menu-button">
+      <span class="bar bg-white h-0.5 block mb-1"></span>
+      <span class="bar bg-white h-0.5 block"></span>
+    </button>
+  </nav>
+
+  <div class="menu-overlay hidden fixed top-[60px] w-full bg-black bg-opacity-70 z-50 flex-col justify-start items-center pt-10" id="menu-overlay">
+    <ul class="menu-list text-center text-white text-lg">
+      <li class="py-2"><a href="galerie.html">Galerie</a></li>
+      <li class="py-2"><a href="biografie.html">Biografie</a></li>
+    </ul>
+  </div>
+
+  <div class="center-button">
+    <button id="openGalleryBtn" class="button">
+      Zur Galerie
+    </button>
+
+    <button onclick="window.location.href='997.html'" class="button">
+      Zurück zur Hauptseite
+    </button>
+  </div>
+
+  <div class="gallery-images">
+    <img src="Blau_1.jpg" alt="Bild 1" />
+    <img src="Blau_2.jpg" alt="Bild 2" />
+    <img src="Blau_3.jpg" alt="Bild 3" />
+    <img src="Blau_4.jpg" alt="Bild 4" />
+    <img src="DSC_1.JPG" alt="Bild 6" />
+    <img src="DSC_2.JPG" alt="Bild 7" />
+    <img src="DSC_3.JPG" alt="Bild 8" />
+    <img src="DSC_5.JPG" alt="Bild 9" />
+    <img src="DSC_6.JPG" alt="Bild 10" />
+  </div>
+
+  <!-- Modal -->
+  <div id="image-modal" class="modal">
+    <div class="modal-content">
+      <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl">✕</button>
+      <button class="nav-button prev" onclick="prevImage()">‹</button>
+      <img id="modal-image" src="" alt="Vollbild" />
+      <button class="nav-button next" onclick="nextImage()">›</button>
+      <div id="image-description" class="absolute bottom-4 text-white text-center w-full px-4 text-sm"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("menu-button").addEventListener("click", () => {
+      document.getElementById("menu-overlay").classList.toggle("hidden");
+    });
+
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-image");
+    const descriptionBox = document.getElementById("image-description");
+    const galleryImgs = Array.from(document.querySelectorAll(".gallery-images img"));
+    let currentIndex = 0;
+
+    const imageDescriptions = [
+      "", "", // Bild 1 und 2
+      "Antonio Blau-Grün<br>Experimenteller Holzschnitt, Collage mit acrylgemaltem Druck<br>70 x 50 cm, 2019<br>Auflage 3/4",
+      "Antonio Blau-Grün<br>Experimenteller Holzschnitt, Collage mit acrylgemaltem Druck<br>70 x 50 cm, 2019<br>Auflage 4/4",
+      "", "", "", "", "", ""
+    ];
+
+    function showImage(index) {
+      modalImg.src = galleryImgs[index].src;
+      const description = imageDescriptions[index] || "";
+      descriptionBox.innerHTML = description;
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      showImage(currentIndex);
+      modal.classList.add("active");
+    }
+
+    function closeModal() {
+      modal.classList.remove("active");
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+      showImage(currentIndex);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryImgs.length;
+      showImage(currentIndex);
+    }
+
+    document.getElementById("openGalleryBtn").addEventListener("click", () => openModal(0));
+    document.getElementById("close-modal").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Touch Swipe Unterstützung
+    let touchStartX = 0;
+    modal.addEventListener("touchstart", e => touchStartX = e.touches[0].clientX);
+    modal.addEventListener("touchend", e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchStartX - touchEndX > 50) nextImage();
+      else if (touchEndX - touchStartX > 50) prevImage();
+    });
+  </script>
+
+  <footer>
+    <p>© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+    <div>
+      <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+      <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+      <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+    </div>
+  </footer>
+
+</body>
+</html>

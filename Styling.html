@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verónica Paola Höft – Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Emotionale Kunst aus Bad Kreuznach." />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Mulish', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+        }
+    </style>
+</head>
+<body class="bg-[#4a4946] text-[#fefcfb] pb-24">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 flex justify-between items-center h-[60px] px-5 bg-[rgba(100,90,80,0.6)] text-[#fefcfb] backdrop-blur">
+        <a href="index.html" class="text-xl font-bold">Verónica Höft</a>
+        <button id="menu-button" class="flex flex-col justify-between w-[30px] h-[20px] cursor-pointer" aria-label="Menü öffnen">
+            <span class="bg-[#fefcfb] h-[3px] w-full transition-all"></span>
+            <span class="bg-[#fefcfb] h-[3px] w-full transition-all"></span>
+        </button>
+    </nav>
+
+    <!-- Menü Overlay -->
+    <div id="menu-overlay" class="fixed top-[60px] left-0 right-0 w-full h-[30%] bg-[rgba(210,190,160,0.25)] backdrop-blur transform translate-x-full opacity-0 pointer-events-none transition-all duration-500 z-[1000] flex flex-col justify-start pt-[45px]" aria-hidden="true">
+        <ul class="text-center">
+            <li class="py-2"><a href="Galerie111.html" class="text-[18px] hover:text-[#f0e3d1]">Galerie</a></li>
+            <li class="py-2"><a href="UnterseiteBio.html" class="text-[18px] hover:text-[#f0e3d1]">Biografie</a></li>
+        </ul>
+    </div>
+
+    <!-- Titel -->
+    <h1 class="text-center text-4xl sm:text-5xl font-semibold mt-28 sm:mt-24 mb-4">
+        Willkommen in meiner Welt der Kunst
+    </h1>
+
+    <p class="text-center text-base sm:text-lg mb-6 font-light max-w-xl mx-auto px-4">
+        Jede Linie, jede Farbe erzählt eine Geschichte – tauchen Sie ein in meine emotionale Bildwelt.
+    </p>
+
+    <!-- Bild-Intro -->
+    <div class="relative w-full h-[260px] sm:h-[340px] md:h-[420px] mt-8 sm:mt-12 bg-[url('Mainfirstpage.jpg')] bg-cover bg-no-repeat bg-center brightness-[0.95] contrast-[1.05] shadow-lg"></div>
+
+    <!-- Unterüberschrift -->
+    <h2 class="text-center text-3xl sm:text-4xl font-normal mt-12 mb-4">
+        Emotionen auf Leinwand – Vielfalt entdecken
+    </h2>
+
+    <p class="text-center text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
+        Meine Werke sind geprägt von Farben, Stimmungen und tiefen Gefühlen. Ob abstrakt oder figürlich, zart oder kraftvoll – lassen Sie sich von meiner Kunst berühren.
+    </p>
+
+    <!-- Optional Platz für Galerie-Vorschau -->
+    <div class="flex justify-center">
+  <button
+    class="mt-10 mb-12 border border-white/50 hover:border-white hover:bg-transparent px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg rounded-full cursor-pointer leading-relaxed sm:leading-7 w-full max-w-xs sm:max-w-sm md:max-w-md">
+    Zur Galerie
+  </button>
+</div>
+
+   
+<!-- Footer -->
+    <footer class="fixed bottom-0 w-full text-center text-sm px-5 py-3 bg-[rgba(0,0,0,0.6)] backdrop-blur text-[#f0f0f5]">
+        <p>© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+        <div class="flex justify-center gap-6 mt-2">
+            <a href="datenschutz.html" class="hover:text-[#d9d9d9]">Datenschutz</a>
+            <a href="impressum.html" class="hover:text-[#d9d9d9]">Impressum</a>
+            <a href="kontakt.html" class="hover:text-[#d9d9d9]">Kontakt</a>
+        </div>
+    </footer>
+
+    
+    <!-- JavaScript für Menü -->
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function () {
+            const menuOverlay = document.getElementById('menu-overlay');
+            menuOverlay.classList.toggle('translate-x-0');
+            menuOverlay.classList.toggle('translate-x-full');
+            menuOverlay.classList.toggle('opacity-0');
+            menuOverlay.classList.toggle('pointer-events-none');
+            const isActive = menuOverlay.classList.contains('translate-x-0');
+            menuOverlay.setAttribute('aria-hidden', !isActive);
+        });
+    </script>
+</body>
+</html>

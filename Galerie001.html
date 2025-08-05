@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aziza Aziz 101 - Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Exquisites User-Interface Design aus Berlin.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #2A2E35;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+
+
+
+
+        .gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px 20px 20px;
+    justify-content: center;
+}
+
+.gallery-item {
+    display: inline-block; /* Nimmt nur die Größe des Bildes an */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-item img {
+    transform: scale(0.7); /* Skaliert jedes Bild auf 70% der Originalgröße */
+    display: block;
+}
+
+
+
+
+        /* Modal Styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: transparent; /* Keine Hintergrundfarbe mehr */
+            padding: 0; /* Kein Padding mehr */
+            border-radius: 10px;
+            text-align: center;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 80vh; /* Maximale Höhe im Modal */
+            object-fit: contain;
+        }
+
+        /* Stil für das Kreuz (Schließen-Button) */
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.3); /* Transparentes Hintergrund */
+            border: none;
+            color: white;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 18px; /* Schriftgröße anpassen */
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.5); /* Hellerer Hintergrund beim Hover */
+        }
+
+        /* Stil für das Kreuz, um es in der Mitte richtig auszurichten */
+        .close-modal::before {
+            content: '×'; /* Das Kreuz als Zeichen */
+            font-size: 24px; /* Größere Schriftgröße für das Kreuz */
+            color: white;
+            text-align: center;
+        }
+
+
+
+
+        #galaxyCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+    </style>
+</head>
+<body>
+
+    <canvas id="galaxyCanvas"></canvas>
+    
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-black bg-opacity-80 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+        <a href="index.html" class="text-xl font-bold">Verónica Paola Höft 101</a>
+        <button id="menu-btn" class="menu-button">
+            <div></div>
+            <div></div>
+        </button>
+    </nav>
+<br>
+<br>
+<br>
+    <!-- Galerie Abschnitt -->
+    <div class="gallery-container">
+        <!-- Galerie Item 1 -->
+        <div class="gallery-item" onclick="openModal('image1')">
+            <img id="image1" src="Blau_1.jpg" alt="Bild 1">
+        </div>
+
+        <!-- Galerie Item 2 -->
+        <div class="gallery-item" onclick="openModal('image2')">
+            <img id="image2" src="Blau_2.jpg" alt="Bild 2">
+        </div>
+
+        <!-- Galerie Item 3 -->
+        <div class="gallery-item" onclick="openModal('image3')">
+            <img id="image3" src="Blau_3.jpg" alt="Bild 3">
+        </div>
+
+        <!-- Galerie Item 3 -->
+        <div class="gallery-item" onclick="openModal('image4')">
+            <img id="image4" src="Blau_4.jpg" alt="Bild 4">
+        </div>
+
+
+
+
+
+
+
+        <!-- Galerie Item 1 -->
+        <div class="gallery-item" onclick="openModal('image5')">
+            <img id="image5" src="Atelier.JPG" alt="Bild 5">
+        </div>
+
+      
+
+
+
+        <!-- Weitere Bilder können hier hinzugefügt werden -->
+    </div>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- Modal -->
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal" class="close-modal"></button>
+            <img id="modal-image" src="" alt="Vollbild">
+        </div>
+    </div>
+
+    <script>
+        // Funktion zum Öffnen des Modals
+        function openModal(imageId) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const imageSrc = document.getElementById(imageId).src;
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+        }
+
+        // Funktion zum Schließen des Modals
+        const closeModalBtn = document.getElementById('close-modal');
+        closeModalBtn.addEventListener('click', function () {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+        });
+
+        // Funktion zum Schließen des Modals, wenn außerhalb des Modals geklickt wird
+        const modal = document.getElementById('image-modal');
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+
+
+
+
+        const canvas = document.getElementById("galaxyCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawBackground();
+            drawStars();
+        }
+
+        function drawBackground() {
+            // Die Größe des helleren Bereichs ist so klein wie möglich
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0, // Der hellste Punkt ist an der Mitte (fast unsichtbar)
+                canvas.width / 2, canvas.height / 2, canvas.width * 0.6 // Der dunkle Bereich geht fast bis zum Rand
+            );
+
+
+            gradient.addColorStop(0, "rgba(227, 242, 253, 0)"); // Fast unsichtbares Blau in der Mitte
+gradient.addColorStop(0.000001, "rgba(210, 235, 255, 0.1)"); // Sehr helles Blau fast unsichtbar
+gradient.addColorStop(0.000005, "rgba(220, 240, 240, 0.4)"); // Noch helleres Türkis mit starkem Silberanteil
+gradient.addColorStop(1, "#EEEEEE"); // Sehr helles Silber/Grau statt Schwarz
+
+
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawStars() {
+            ctx.fillStyle = "white";
+            
+            // Nur ein einzelner Stern an einer zufälligen Position
+            const x = Math.random() * canvas.width;  // Zufällige X-Position
+            const y = Math.random() * canvas.height; // Zufällige Y-Position
+            const size = 2; // Der Stern soll klein und subtil sein
+
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-4 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="mb-2 md:mb-0">© 2025 Aziza Aziz. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-6">
+                <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+                <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+                <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

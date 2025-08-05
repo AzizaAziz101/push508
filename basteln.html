@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basteln – Verónica Paola Höft 101</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background-color: #7f7f7f; /* Tailwind: bg-gray-300 */
+    }
+
+    .center-button {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: transparent;
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+
+    .gallery-images {
+      display: none;
+    }
+
+    .nav-button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+    }
+
+    .prev { left: 485px; }
+    .next { right: 485px; }
+  </style>
+</head>
+<body>
+
+  <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">Verónica Paola Höft 101</a>
+    <button id="menu-button" class="menu-button">
+      <span class="bar bg-white h-0.5 block mb-1"></span>
+      <span class="bar bg-white h-0.5 block"></span>
+    </button>
+  </nav>
+
+  <div class="menu-overlay hidden fixed top-[60px] w-full bg-black bg-opacity-70 z-50 flex-col justify-start items-center pt-10" id="menu-overlay">
+    <ul class="menu-list text-center text-white text-lg">
+      <li class="py-2"><a href="galerie.html">Galerie</a></li>
+      <li class="py-2"><a href="biografie.html">Biografie</a></li>
+    </ul>
+  </div>
+
+  <div class="center-button">
+    <button id="openGalleryBtn" class="bg-gray-800 text-white px-8 py-4 rounded-xl hover:bg-gray-700 text-lg transition">
+      Zur Galerie
+    </button>
+    
+  </div>
+
+  <div>
+
+    <button onclick="window.location.href='997.html'" class="mt-4 bg-gray-600 text-white px-8 py-4 rounded-xl hover:bg-gray-500 text-lg transition">
+        Zurück zur Hauptseite
+      </button>
+
+
+  </div>
+
+  <!-- Unsichtbare Galerie-Bilder -->
+  <div class="gallery-images">
+    <img src="Blau_1.jpg" alt="Bild 1" />
+    <img src="Blau_2.jpg" alt="Bild 2" />
+    <img src="Blau_3.jpg" alt="Bild 3" />
+    <img src="Blau_4.jpg" alt="Bild 4" />
+    <img src="Atelier.JPG" alt="Bild 5" />
+  </div>
+
+  <!-- Modal -->
+  <div id="image-modal" class="modal">
+    <div class="modal-content">
+      <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl">✕</button>
+      <button class="nav-button prev" onclick="prevImage()">‹</button>
+      <img id="modal-image" src="" alt="Vollbild" />
+      <button class="nav-button next" onclick="nextImage()">›</button>
+    </div>
+  </div>
+
+  <script>
+    // Menü-Button
+    document.getElementById("menu-button").addEventListener("click", () => {
+      document.getElementById("menu-overlay").classList.toggle("hidden");
+    });
+
+    // Galerie-Modal
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-image");
+    const galleryImgs = Array.from(document.querySelectorAll(".gallery-images img"));
+    let currentIndex = 0;
+
+    function openModal(index) {
+      currentIndex = index;
+      modalImg.src = galleryImgs[currentIndex].src;
+      modal.classList.add("active");
+    }
+
+    function closeModal() {
+      modal.classList.remove("active");
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+      modalImg.src = galleryImgs[currentIndex].src;
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryImgs.length;
+      modalImg.src = galleryImgs[currentIndex].src;
+    }
+
+    document.getElementById("openGalleryBtn").addEventListener("click", () => openModal(0));
+    document.getElementById("close-modal").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Swipe für Touchgeräte
+    let touchStartX = 0;
+    modal.addEventListener("touchstart", e => touchStartX = e.touches[0].clientX);
+    modal.addEventListener("touchend", e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchStartX - touchEndX > 50) nextImage();
+      else if (touchEndX - touchStartX > 50) prevImage();
+    });
+  </script>
+
+
+
+<footer class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-3 text-center text-sm">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+        <p class="mb-2 md:mb-0">© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+        <div class="flex space-x-6">
+            <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+            <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+            <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+        </div>
+    </div>
+</footer>
+
+
+
+</body>
+</html>

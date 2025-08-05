@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verónica Paola Höft 101 - Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Kunst aus Bad Kreuznach.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #2A2E35;
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #galaxyCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+
+
+
+
+
+
+
+
+/* Menü Button */
+.menu-button {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.menu-button .bar {
+    background-color: white;
+    height: 3px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+/* Menü Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 60px;  /* Startet direkt unter der Nav */
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 35%;  /* Menü erstreckt sich nur 35% des Bildschirms */
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 60px;  /* Abstand zum oberen Rand */
+    z-index: 1000;
+    transform: translateY(-100%); /* Menü ist zu Beginn außerhalb des Bildschirms */
+    transition: transform 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: flex;
+    transform: translateY(0);  /* Menü kommt von unten nach oben */
+}
+
+/* Menü-Liste */
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.menu-list li {
+    padding: 18px;  /* Leicht vergrößerter Abstand */
+}
+
+.menu-list a {
+    font-size: 18px;  /* Etwas kleinere Schrift */
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s;
+}
+
+.menu-list a:hover {
+    color: #FFD700; /* Goldene Farbe beim Hover */
+}
+
+
+
+nav {
+    padding: 12px 20px;  /* Kleinere Abstände */
+    font-size: 16px; /* Kleinere Schrift */
+}
+
+footer {
+    padding: 12px 20px; /* Kleinere Abstände */
+    font-size: 14px; /* Kleinere Schrift */
+}
+
+footer .flex a {
+    font-size: 14px; /* Schriftgröße für Links im Footer */
+    color: white;
+}
+
+footer .flex a:hover {
+    color: #FFD700; /* Hover-Effekt */
+}
+
+
+
+
+
+
+
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 50px 20px 20px;
+            justify-content: center;
+        }
+
+        .gallery-item {
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Modal Styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: transparent;
+            padding: 0;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 80%;
+            max-height: 80%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+
+        .nav-button {
+    position: fixed; /* <- Ändere hier */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100; /* über allem */
+}
+
+.prev {
+    left: 485px; /* fix vom linken Rand */
+}
+
+.next {
+    right: 485px; /* fix vom rechten Rand */
+}
+
+
+
+        .scroll-container {
+    position: absolute;
+    top: 590px; /* Falls du eine feste Position willst, ansonsten top: 50% für zentriert im Viewport */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 100;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Harmonischer Abstand zwischen Text und Pfeil */
+}
+
+.scroll-container p {
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #000000; /* Weißer Text auf dunklem Hintergrund */
+}
+
+
+.arrow {
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  transform: rotate(45deg);
+  margin: 15px auto 0;
+  transition: transform 0.2s;
+}
+
+.arrow.bounce {
+  transform: translateY(12px) rotate(45deg);
+}
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="scroll-container" id="scroll-container">
+        <p>Scroll to Explore</p>
+        <div class="arrow" id="bounceArrow"></div>
+    </div>
+    
+    
+    
+
+
+    <canvas id="galaxyCanvas"></canvas>
+
+
+    
+
+
+        <nav class="fixed top-0 w-full bg-black bg-opacity-60 backdrop-blur-md text-white p-4 z-50 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold">Verónica Paola Höft 101</a>
+        
+            <!-- Menü Button für Mobile -->
+            <button id="menu-button" class="menu-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+
+
+       <!-- Menü Overlay (Erscheint beim Klick) -->
+<div id="menu-overlay" class="menu-overlay">
+    <ul class="menu-list">
+        <li><a href="Galerie101.html">Galerie</a></li>
+        <li><a href="biografie.html">Biografie</a></li>
+    </ul>
+</div>
+
+    
+
+
+
+
+
+
+
+
+    <div class="gallery-container">
+        <div class="gallery-item" onclick="openModal(0)">
+            <img src="Blau_1 HINTERGRUND.jpg" alt="Bild 1">
+        </div>
+        <div class="gallery-item" onclick="openModal(1)">
+            <img src="Blau_2.jpg" alt="Bild 2">
+        </div>
+        <div class="gallery-item" onclick="openModal(2)">
+            <img src="Blau_3.jpg" alt="Bild 3">
+        </div>
+        <div class="gallery-item" onclick="openModal(3)">
+            <img src="Blau_4.jpg" alt="Bild 4">
+        </div>
+        <div class="gallery-item" onclick="openModal(4)">
+            <img src="Atelier - HINTERGRUND.JPG" alt="Bild 5">
+        </div>
+    </div>
+
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal" class="close-modal"></button>
+            <button class="nav-button prev" onclick="prevImage()">‹</button>
+            <img id="modal-image" src="" alt="Vollbild">
+            <button class="nav-button next" onclick="nextImage()">›</button>
+        </div>
+    </div>
+
+    <script>
+
+
+
+document.getElementById("menu-button").addEventListener("click", function() {
+    var menuOverlay = document.getElementById("menu-overlay");
+    menuOverlay.classList.toggle("active");
+});
+
+
+
+
+
+
+
+
+
+        let currentImageIndex = 0;
+        const images = document.querySelectorAll('.gallery-item img');
+        const modal = document.getElementById('image-modal');
+
+        function openModal(index) {
+            currentImageIndex = index;
+            updateModalImage();
+            modal.classList.add('active');
+        }
+
+        function updateModalImage() {
+            document.getElementById('modal-image').src = images[currentImageIndex].src;
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+            updateModalImage();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+            updateModalImage();
+        }
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        let touchStartX = 0;
+
+        modal.addEventListener('touchstart', (event) => {
+            touchStartX = event.touches[0].clientX;
+        });
+
+        modal.addEventListener('touchend', (event) => {
+            let touchEndX = event.changedTouches[0].clientX;
+            if (touchStartX - touchEndX > 50) nextImage();
+            if (touchEndX - touchStartX > 50) prevImage();
+        });
+
+        const canvas = document.getElementById("galaxyCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawBackground();
+            drawStars();
+        }
+
+        function drawBackground() {
+            const gradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0, 
+                canvas.width / 2, canvas.height / 2, canvas.width * 0.6
+            );
+
+            gradient.addColorStop(0, "rgba(227, 242, 253, 0)");
+            gradient.addColorStop(0.000001, "rgba(210, 235, 255, 0.1)");
+            gradient.addColorStop(0.000005, "rgba(220, 240, 240, 0.4)");
+            gradient.addColorStop(1, "#EEEEEE");
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawStars() {
+            ctx.fillStyle = "white";
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = 2;
+
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        
+       
+        window.onscroll = function () {
+    if (window.scrollY > 1745) {
+        document.getElementById('bounceArrow').style.display = 'none';
+        document.getElementById('scroll-container').style.display = 'none';
+    }
+};
+
+
+     
+  const arrow = document.getElementById('bounceArrow');
+
+  function triggerBounce() {
+    arrow.classList.add('bounce');
+
+    // Nach 200ms zurückspringen (wie ein echter Tick)
+    setTimeout(() => {
+      arrow.classList.remove('bounce');
+    }, 200);
+  }
+
+  // Alle 6 Sekunden einmal triggern
+  setInterval(triggerBounce, 5000);
+</script>
+
+    </script>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 backdrop-blur-md text-white py-3 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="mb-2 md:mb-0">© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+            <div class="flex space-x-6">
+                <a href="datenschutz.html" class="hover:text-gray-300 transition">Datenschutz</a>
+                <a href="impressum.html" class="hover:text-gray-300 transition">Impressum</a>
+                <a href="kontakt.html" class="hover:text-gray-300 transition">Kontakt</a>
+            </div>
+        </div>
+    </footer>
+    
+
+</body>
+</html>

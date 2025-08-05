@@ -1,0 +1,95 @@
+
+
+
+
+
+
+    <div class="gallery-container">
+        <div class="gallery-item" onclick="openModal(0)">
+            <img src="Blau_1 HINTERGRUND.jpg" alt="Bild 1">
+        </div>
+        <div class="gallery-item" onclick="openModal(1)">
+            <img src="Blau_2.jpg" alt="Bild 2">
+        </div>
+        <div class="gallery-item" onclick="openModal(2)">
+            <img src="Blau_3.jpg" alt="Bild 3">
+        </div>
+        <div class="gallery-item" onclick="openModal(3)">
+            <img src="Blau_4.jpg" alt="Bild 4">
+        </div>
+        <div class="gallery-item" onclick="openModal(4)">
+            <img src="Atelier - HINTERGRUND.JPG" alt="Bild 5">
+        </div>
+    </div>
+
+    <div id="image-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal" class="close-modal"></button>
+            <button class="nav-button prev" onclick="prevImage()">‹</button>
+            <img id="modal-image" src="" alt="Vollbild">
+            <button class="nav-button next" onclick="nextImage()">›</button>
+        </div>
+    </div>
+
+    <script>
+
+
+
+document.getElementById("menu-button").addEventListener("click", function() {
+    var menuOverlay = document.getElementById("menu-overlay");
+    menuOverlay.classList.toggle("active");
+});
+
+
+
+
+
+
+
+
+
+        let currentImageIndex = 0;
+        const images = document.querySelectorAll('.gallery-item img');
+        const modal = document.getElementById('image-modal');
+
+        function openModal(index) {
+            currentImageIndex = index;
+            updateModalImage();
+            modal.classList.add('active');
+        }
+
+        function updateModalImage() {
+            document.getElementById('modal-image').src = images[currentImageIndex].src;
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+            updateModalImage();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+            updateModalImage();
+        }
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        let touchStartX = 0;
+
+        modal.addEventListener('touchstart', (event) => {
+            touchStartX = event.touches[0].clientX;
+        });
+
+        modal.addEventListener('touchend', (event) => {
+            let touchEndX = event.changedTouches[0].clientX;
+            if (touchStartX - touchEndX > 50) nextImage();
+            if (touchEndX - touchStartX > 50) prevImage();
+        });

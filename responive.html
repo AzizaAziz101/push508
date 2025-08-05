@@ -1,0 +1,217 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verónica Paola Höft 101 - Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Kunst aus Bad Kreuznach." />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 80px;
+            background-color: #5a6069;
+            color: #f0f0f5;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .background-div {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-image: url('Mainfirstpage.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-top: 6vh;
+            filter: brightness(0.9) contrast(1);
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .menu-button .bar {
+            background-color: #f0f0f5;
+            height: 3px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 20%;
+            background-color: rgba(180, 180, 180, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 45px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            pointer-events: none;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .menu-list li {
+            padding: 4px;
+        }
+
+        .menu-list a {
+            font-size: 18px;
+            color: #f0f0f5;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .menu-list a:hover {
+            color: #d9d9d9;
+        }
+
+        nav {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: rgba(120, 130, 150, 0.6);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #f0f0f5;
+            height: 60px;
+        }
+
+        footer {
+            padding: 12px 20px;
+            font-size: 14px;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: #f0f0f5;
+            text-align: center;
+        }
+
+        footer .flex {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        footer .flex a {
+            font-size: 14px;
+            color: #f0f0f5;
+            text-decoration: none;
+        }
+
+        footer .flex a:hover {
+            color: #d9d9d9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Überschrift über dem Bild -->
+    <h1 class="text-white text-center text-4xl font-semibold mt-24 mb-2 font-[Mulish]">
+        Willkommen in der Galerie von Verónica Paola Höft
+    </h1>
+
+    <!-- Kleiner Text unter der H1 -->
+    <p class="text-white text-center text-base mb-4 font-[Mulish]">
+        Ein Ort, an dem Kunst und Emotionen verschmelzen.
+    </p>
+
+    <!-- Bild -->
+    <div class="background-div"></div>
+
+    <!-- Unterüberschrift -->
+    <h2 class="text-white text-center text-3xl font-normal mt-6 mb-2 font-[Roboto_Slab]">
+        Entdecken Sie einzigartige Kunstwerke
+    </h2>
+
+    <!-- Text darunter -->
+    <p class="text-white text-center max-w-xl mx-auto text-lg leading-relaxed mb-12 font-[Mulish]">
+        Tauchen Sie ein in die kreative Welt von Verónica Höft, einer Künstlerin aus Bad Kreuznach. Hier finden Sie eine Auswahl inspirierender Werke, die Emotion und Technik vereinen.
+    </p>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="text-xl font-bold">Verónica Höft</a>
+        <button id="menu-button" class="menu-button" aria-label="Menü öffnen">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </nav>
+
+    <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+        <ul class="menu-list">
+            <li><a href="Galerie111.html">Galerie</a></li>
+            <li><a href="UnterseiteBio.html">Biografie</a></li>
+        </ul>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+        <div class="flex">
+            <a href="datenschutz.html">Datenschutz</a>
+            <a href="impressum.html">Impressum</a>
+            <a href="kontakt.html">Kontakt</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function () {
+            const menuOverlay = document.getElementById('menu-overlay');
+            menuOverlay.classList.toggle('active');
+            const isActive = menuOverlay.classList.contains('active');
+            menuOverlay.setAttribute('aria-hidden', !isActive);
+        });
+    </script>
+
+</body>
+</html>

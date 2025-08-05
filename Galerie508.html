@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verónica Paola Höft – Galerie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Emotionale Kunst aus Bad Kreuznach." />
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Mulish', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Roboto Slab', serif;
+        }
+
+            /* Hamburger Animation */
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #4B3F3A;
+      border-radius: 1px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+    .hamburger.open span:nth-child(2) {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+        /* Slide-in Animation */
+    @keyframes slideIn {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(-100%); opacity: 0; }
+    }
+    .slide-in { animation: slideIn 0.3s ease forwards; }
+    .slide-out { animation: slideOut 0.3s ease forwards; }
+
+        .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .button {
+      padding: 12px 25px;
+      background-color: #e9e2e2;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3A3A3A;
+    }
+
+
+
+
+
+
+
+
+    /* Mobile Anpassung für Bild + Beschreibung */
+@media (max-width: 768px) {
+  .modal-content.has-description {
+    position: relative;
+    flex-direction: column; /* Fallback falls kein Overlay greift */
+  }
+
+  .modal-content.has-description img {
+  width: 100%;
+}
+
+  
+
+  .modal-content.has-description .description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Halbtransparentes Overlay */
+    padding: 12px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-height: 40%;
+    overflow-y: auto; /* Scrollbar bei langen Texten */
+  }
+}
+
+/* Extra kleine Geräte (<480px) → Buttons kleiner machen */
+@media (max-width: 480px) {
+  .nav-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+  }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+}
+
+    .center-button {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: transparent;
+      border-radius: 10px;
+      max-width: 80%;
+      max-height: 80%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content.has-description {
+      justify-content: space-between;
+      flex-direction: row;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+
+    .modal-content.has-description img {
+      width: 70%;
+    }
+
+    .description {
+      display: none;
+      width: 30%;
+      padding: 20px;
+      color: white;
+      text-align: left;
+      font-size: 14px;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+
+    .modal-content.has-description .description {
+      display: block;
+    }
+
+    .gallery-images {
+      display: none;
+    }
+
+    .nav-button {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1100;
+    }
+
+    .prev { left: 50px; }
+    .next { right: 50px; }
+    </style>
+</head>
+<body class="bg-[#4a4946] text-[#fefcfb] pb-24">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 flex justify-between items-center h-[60px] px-5 bg-[rgba(100,90,80,0.6)] text-[#fefcfb] backdrop-blur">
+        <a href="index.html" class="text-xl font-bold">Verónica Höft</a>
+        
+        <!-- Desktop Links -->
+<div class="hidden md:flex gap-6 text-lg font-medium">
+  <a href="#services">Biografie</a>
+  <a href="#about">Galerie</a>
+  <a href="#contact">Ausstellungen</a>
+</div>
+
+        <!-- Mobile Hamburger mit 2 Linien -->
+      <button id="menu-btn" 
+              class="hamburger md:hidden flex flex-col gap-2 ml-4 focus:outline-none relative z-10">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+    </nav>
+
+      
+
+<!-- Mobile Menü Overlay -->
+<div id="mobile-menu" class="fixed inset-0 bg-black text-black bg-opacity-50 hidden z-50">
+  <div id="menu-panel" class="bg-white w-64 h-full p-6 shadow-lg">
+    <!-- Menu Links -->
+    <nav class="flex flex-col gap-4 font-medium text-lg mt-10">
+      <a href="#services" class="hover:text-[#F7AFAE]">Biografie</a>
+      <a href="#about" class="hover:text-[#F7AFAE]">Galerie</a>
+      <a href="#contact" class="hover:text-[#F7AFAE]">Austellungen</a>
+    </nav>
+  </div>
+</div>
+
+
+
+    <!-- Titel -->
+    <h1 class="text-center text-4xl sm:text-5xl font-semibold mt-28 sm:mt-24 mb-2">
+        Willkommen in meiner Galerie
+    </h1>
+
+
+      <div class="flex flex-col justify-center items-center gap-4 min-h-screen px-4 text-center">
+    <button id="openGalleryBtn"
+      class="bg-transparent text-white border border-white/50 hover:border-white hover:bg-transparent px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg rounded-full cursor-pointer leading-relaxed sm:leading-7 w-full sm:w-auto max-w-md">
+      Zur Galerie
+    </button>
+  
+    <a href="index.html"
+      class="bg-transparent text-white border border-white/50 hover:border-white hover:bg-transparent px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg rounded-full cursor-pointer leading-relaxed sm:leading-7 w-full sm:w-auto max-w-md">
+      Zurück
+    </a>
+  </div>
+  
+  
+
+  <div class="gallery-images">
+    <img src="Blau_1.jpg" alt="Bild 1" />
+    <img src="Blau_2.jpg" alt="Bild 2" />
+    <img src="Blau_3.jpg" alt="Bild 3" />
+    <img src="Blau_4.jpg" alt="Bild 4" />
+    <img src="DSC_3.JPG" alt="Bild 8" />
+    <img src="DSC_1.JPG" alt="Bild 6" />
+    <img src="DSC_6.JPG" alt="Bild 9" />
+    <img src="DSC_4.JPG" alt="Bild 10" />
+    <img src="4x_Orange.jpg" alt="Bild 11" />
+    <img src="4x_Blau.jpg" alt="Bild 12" />
+  </div>
+
+  <!-- Modal -->
+  <div id="image-modal" class="modal">
+    <div class="modal-content">
+      <button id="close-modal" class="absolute top-4 right-4 text-white text-3xl z-50">✕</button>
+      <button class="nav-button prev" onclick="prevImage()">‹</button>
+      <img id="modal-image" src="" alt="Vollbild" />
+      <div id="image-description" class="description"></div>
+      <button class="nav-button next" onclick="nextImage()">›</button>
+    </div>
+  </div>
+
+
+   
+<!-- Footer -->
+    <footer class="fixed bottom-0 w-full text-center text-sm px-5 py-3 bg-[rgba(0,0,0,0.6)] backdrop-blur text-[#f0f0f5]">
+        <p>© 2025 Verónica Paola Höft. Alle Rechte vorbehalten.</p>
+        <div class="flex justify-center gap-6 mt-2">
+            <a href="datenschutz.html" class="hover:text-[#d9d9d9]">Datenschutz</a>
+            <a href="impressum.html" class="hover:text-[#d9d9d9]">Impressum</a>
+            <a href="kontakt.html" class="hover:text-[#d9d9d9]">Kontakt</a>
+        </div>
+    </footer>
+
+    
+    <!-- JavaScript für Menü -->
+    <script>
+         const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuPanel = document.getElementById('menu-panel');
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menuBtn.classList.toggle('open');
+
+    if (isOpen) {
+      mobileMenu.classList.remove('hidden');
+      menuPanel.classList.remove('slide-out');
+      menuPanel.classList.add('slide-in');
+    } else {
+      menuPanel.classList.remove('slide-in');
+      menuPanel.classList.add('slide-out');
+      mobileMenu.classList.add('hidden');
+      
+    }
+  });
+
+  // Close menu when clicking outside panel
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) {
+      menuBtn.classList.remove('open');
+      menuPanel.classList.remove('slide-in');
+      menuPanel.classList.add('slide-out');
+        mobileMenu.classList.add('hidden');
+      
+    }
+  });
+
+
+
+
+    
+  
+    const modal = document.getElementById("image-modal");
+    const modalImg = document.getElementById("modal-image");
+    const descriptionBox = document.getElementById("image-description");
+    const modalContent = document.querySelector(".modal-content");
+    const galleryImgs = Array.from(document.querySelectorAll(".gallery-images img"));
+    let currentIndex = 0;
+
+    const imageDescriptions = [
+      "", "", // Bild 3 und 4
+      "Antonio Blau-Grün<br>Experimenteller Holzschnitt, Collage mit<br>acrylgemaltem Druck<br>70 x 50 cm, 2019<br>Auflage 3/4",
+      "Antonio Blau-Grün<br>Experimenteller Holzschnitt, Collage mit<br>acrylgemaltem Druck<br>70 x 50 cm, 2019<br>Auflage 4/4",
+      "", "", "", "", "", ""
+    ];
+
+    function showImage(index) {
+      modalImg.src = galleryImgs[index].src;
+      const description = imageDescriptions[index] || "";
+
+      if (description.trim() !== "") {
+        modalContent.classList.add("has-description");
+        descriptionBox.innerHTML = description;
+      } else {
+        modalContent.classList.remove("has-description");
+        descriptionBox.innerHTML = "";
+      }
+    }
+
+    function openModal(index) {
+      currentIndex = index;
+      showImage(currentIndex);
+      modal.classList.add("active");
+    }
+
+    function closeModal() {
+      modal.classList.remove("active");
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+      showImage(currentIndex);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % galleryImgs.length;
+      showImage(currentIndex);
+    }
+
+    document.getElementById("openGalleryBtn").addEventListener("click", () => openModal(0));
+    document.getElementById("close-modal").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Touch Swipe Unterstützung
+    let touchStartX = 0;
+    modal.addEventListener("touchstart", e => touchStartX = e.touches[0].clientX);
+    modal.addEventListener("touchend", e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchStartX - touchEndX > 50) nextImage();
+      else if (touchEndX - touchStartX > 50) prevImage();
+    });
+
+
+
+
+
+    document.getElementById("menu-button").addEventListener("click", function() {
+    var menuOverlay = document.getElementById("menu-overlay");
+    menuOverlay.classList.toggle("active");
+});
+
+
+  </script>
+
+</body>
+</html>
